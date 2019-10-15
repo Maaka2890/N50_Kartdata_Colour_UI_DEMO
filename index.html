@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>N50 Kartdata MapBox GL JS color demo</title>    
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.0/mapbox-gl.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <center><H1> Mapbox Vector tile color example </H1></center>
+<style>
+html, body {
+      font-family: sans-serif;
+      width: 100%;
+      background-color: white;
+      color: black;
+    }
+    #map {  
+        height:800px; 
+        width: 100%;
+        cursor: crosshair;
+    }
+    #menu {
+        position: fixed;
+        top: 90px;
+        right:50px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        font-family: sans-serif;
+        border-radius: 3px;
+    }
+    .map-overlay {
+            position: fixed;
+            top: 150px;
+            right: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: sans-serif;
+            border-radius: 3px;
+        }
+
+.map-overlay .map-overlay-inner {
+background-color: #fff;
+box-shadow:0 1px 2px rgba(0, 0, 0, 0.10);
+border-radius: 3px;
+padding: 10px;
+margin-bottom: 10px;
+}
+ 
+.map-overlay-inner fieldset {
+border: none;
+padding: 0;
+margin: 0 0 10px;
+}
+ 
+.map-overlay-inner fieldset:last-child {
+margin: 0;
+}
+ 
+.map-overlay-inner select {
+width: 100%;
+}
+ 
+.map-overlay-inner label {
+display: block;
+font-weight: bold;
+margin: 0 0 5px;
+}
+ 
+.map-overlay-inner button {
+display: inline-block;
+width: 36px;
+height: 20px;
+border: none;
+cursor: pointer;
+}
+ 
+.map-overlay-inner button:focus {
+outline: none;
+}
+ 
+.map-overlay-inner button:hover {
+box-shadow:inset 0 0 0 3px rgba(0, 0, 0, 0.10);
+}
+    #controls {
+            position: fixed;
+            top: 150px;
+            padding: 5px;
+            right: 50px;
+            text-align:center;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: sans-serif;
+            border-radius: 3px;
+        }
+
+    #fly {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: black;
+        background: #c1e5f3;
+        }
+    #fly2 {
+        display: block;
+        position: relative;
+        margin: 0px auto;
+        width: 50%;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: black;
+        background: #c1e5f3;
+        }
+</style>
+
+ 
+<div id='map'></div>
+
+<br/>
+<button id='fly'>Stavanger</button>
+<br/>
+<button id='fly2'>Oslo</button>
+
+<div class='map-overlay top'>
+<div class='map-overlay-inner'>
+<fieldset>
+<label>Select layer</label>
+<select id='layer' name='layer'>
+    <option value='N50Skog'>N50Skog</option>
+    <option value='N50ÅpentOmråde'>N50ÅpentOmråde</option>
+    <option value='N50Myr'>N50Myr</option>
+    <option value='N50Bre'>N50Bre</option>
+    <option value='N50Industri'>N50Industri</option>
+    <option value='N50Sport'>N50Sport</option>
+<option value='N50Bygningsflate'>N50Bygningsflate</option>
+<option value='N50Vannflate'>N50Vannflate</option>
+<option value='Tunnel'>N50Tunnel</option>
+<option value='N50Elver'>N50Elver</option>
+<option value='N50Flomlop'>N50Flomlop</option>
+</select>
+</fieldset>
+<fieldset>
+<label>Choose a color</label>
+<div id='swatches'></div>
+</fieldset>
+
+</div>
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFha2EiLCJhIjoiY2lzZnp4eWhvMDAzejJwbnExNmY5ODdsMCJ9.EeEx5fDH-zH3pdvuHMuncg';
+var map = new mapboxgl.Map({
+            style: 'colour.json',
+            center: [10.248688925359229, 60.143983677450372],
+            zoom: 14,
+            pitch: 60,
+            container: 'map'
+        });
+var swatches = document.getElementById('swatches');
+var layer = document.getElementById('layer');
+var colors = [
+'#ffffff',
+'#ffffcc',
+'#a1dab4',
+'#41b6c4',
+'#2c7fb8',
+'#253494',
+'#fed976',
+'#feb24c',
+'#fd8d3c',
+'#f03b20',
+'#bd0026',
+'#000000'
+];
+ 
+colors.forEach(function(color) {
+var swatch = document.createElement('button');
+swatch.style.backgroundColor = color;
+swatch.addEventListener('click', function() {
+map.setPaintProperty(layer.value, 'fill-color', color);
+});
+swatches.appendChild(swatch);
+});
+
+document.getElementById('fly').addEventListener('click', function () {
+map.flyTo({
+center: [5.744, 58.977]
+});
+});
+document.getElementById('fly2').addEventListener('click', function () {
+map.flyTo({
+center: [10.746, 59.9]
+});
+});
+</script>
+</body>
+</html>
